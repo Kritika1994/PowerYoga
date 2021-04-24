@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParticipantService {
 
-	private List<Participant> participantList = new ArrayList<>( Arrays.asList(new Participant("id1", "Kritika", "5,laxmancolony","32423154231"),
-			new Participant("id2", "Maggie", "5,laxmancolony","32423154231")));
+	private List<Participant> participantList = new ArrayList<>( Arrays.asList(new Participant("Kritika", "k@gmail.com","32423154231", "5,laxman colony", "F"),
+			new Participant("Maggie","m@gmail.com","3243215321", "5,laxmancolony","F")));
 	public List<Participant> getAllUsers() {
 		return participantList;
 		

@@ -1,29 +1,55 @@
 package PowerYogaApp.Participant;
 
+import PowerYogaApp.Round.Score.Status;
+
 public class Participant {
 
 	
 	String id;
 	String name;
-	String Address;
-	String PhoneNumber;
+	String district;
+	String email;
+	String phoneNumber;
+	public enum Gender { Male,Female } 
+	Gender gender;
+	static int currID=0;
 	
-	public Participant(String id, String name, String address, String phoneNumber) {
+	public Participant(String name,  String email, String phoneNumber,String district, String gender) {
 		super();
-		this.id = id;
+		++currID;
+		id="Participant"+currID;
 		this.name = name;
-		Address = address;
-		PhoneNumber = phoneNumber;
+		this.district = district;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.gender= gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("Male")? Gender.Male:Gender.Female;
 	}
+
 	
 	public Participant() {
-		
+		++currID;
+		id="Participant"+currID;
+	}
+	
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
-		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -31,17 +57,11 @@ public class Participant {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAddress() {
-		return Address;
-	}
-	public void setAddress(String address) {
-		Address = address;
-	}
 	public String getPhoneNumber() {
-		return PhoneNumber;
+		return phoneNumber;
 	}
 	public void setPhoneNumber(String phoneNumber) {
-		PhoneNumber = phoneNumber;
+		this.phoneNumber = phoneNumber;
 	}
 	
 }

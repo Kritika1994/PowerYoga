@@ -10,7 +10,7 @@ public class Team {
 	String id;
 	String name;
 	List<Participant> participants;
-	
+	static int MAX_CAPACITY=15;
 	
 	public Team(String id, String name, List<Participant> participants) {
 		super();

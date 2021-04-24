@@ -19,12 +19,15 @@ public class TeamService {
 	private List<Team> teamsList = new ArrayList<>(Arrays.asList(new Team("teamid1", "Team-A",null),
 				new Team("teamid2", "Team-B", null)));
 	
-	public void addParticipant(String teamId, String userId) {
+	public void addParticipant(String teamId, String userId) throws Exception {
 		for(int i=0;i<teamsList.size();i++) {
 			if(teamsList.get(i).getId().equalsIgnoreCase(teamId))
 			{
 				List<Participant> participants = teamsList.get(i).getParticipants();
-				participants.add(participantService.getUser(userId));
+				if(participants.size()<=Team.MAX_CAPACITY)
+					participants.add(participantService.getUser(userId));
+				else
+					throw new Exception("Can't add more than 15 participants");
 				return;
 			}
 		}

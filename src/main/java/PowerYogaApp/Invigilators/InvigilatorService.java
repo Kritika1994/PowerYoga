@@ -25,8 +25,7 @@ public class InvigilatorService {
 		
 	}
 
-	public void updateInvigilator(Invigilator user, String id) {
-		
+	public void updateInvigilator(Invigilator user, String id) {		
 		for(int i=0;i<invigilatorsList.size();i++) {
 			if(invigilatorsList.get(i).getId().equalsIgnoreCase(id)) {
 				invigilatorsList.set(i, user);
