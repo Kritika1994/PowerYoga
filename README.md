@@ -5,4 +5,4 @@ Here, participants will compete in a team of 15, where after each round a number
 Actors:
 1. Teams
 2. Participants
-3. Refree/Instructor
+3. Refree/Invigilator
