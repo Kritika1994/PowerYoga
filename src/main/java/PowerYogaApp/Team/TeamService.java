@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import PowerYogaApp.Participant.Participant;
 import PowerYogaApp.Participant.ParticipantService;
+import PowerYogaApp.Tournament.Tournament;
+import PowerYogaApp.Tournament.TournamentService;
 
 @Service
 public class TeamService {
@@ -16,10 +18,14 @@ public class TeamService {
 	@Autowired
 	private ParticipantService participantService;
 	
+	@Autowired
+	private TournamentService tournamentService;
+	
 	private List<Team> teamsList = new ArrayList<>(Arrays.asList(new Team("teamid1", "Team-A",null),
 				new Team("teamid2", "Team-B", null)));
 	
-	public void addParticipant(String teamId, String userId) throws Exception {
+	public void addParticipant(String tournamentId,String teamId, String userId) throws Exception {
+		Tournament tournaments = tournamentService.getTournament(tournamentId);
 		for(int i=0;i<teamsList.size();i++) {
 			if(teamsList.get(i).getId().equalsIgnoreCase(teamId))
 			{
