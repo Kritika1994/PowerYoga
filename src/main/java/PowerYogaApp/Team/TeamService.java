@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.server.ResponseStatusException;
 
 import PowerYogaApp.Participant.Participant;
@@ -41,22 +42,20 @@ public class TeamService {
 		Optional<Tournament> byId = tournamentDao.findById(tournamentId);
         if (!byId.isPresent()) {
         	throw new ResponseStatusException(
-        			  HttpStatus.NOT_FOUND, "Tournament not found"
+        			  HttpStatus.NOT_FOUND, "Tournament with id " + tournamentId + " not found"
         			);
         }
         Tournament tournament = byId.get();
-      //tie Author to Book
         team.setTournament(tournament);
         teamRepository.save(team);
-        //author1.setBooks(books);
 	}
 	
 	public void deleteTeam(int teamId) {	
 		teamRepository.deleteById(teamId);
 	}
 	
-	public void updateTeam(int tournamentId, Team team) {		
-		teamRepository.save(team);
+	public void updateTeam(int tournamentId, Team team) {
+		
 	}
 
 	public List<Team> getAllTeams() {
@@ -75,5 +74,25 @@ public class TeamService {
 
 	public List<Team> getTeamByTournament(int tournamentId) {
 		return teamRepository.findByTournamentId(tournamentId);
+	}
+
+	public void updateTeam(int tournamentId, int id, Team team) {
+		Optional<Tournament> byId = tournamentDao.findById(tournamentId);
+        if (!byId.isPresent()) {
+        	throw new ResponseStatusException(
+        			  HttpStatus.NOT_FOUND, "Tournament with id " + tournamentId + " not found"
+        			);
+        }
+        Tournament tournament = byId.get();
+        
+        if (!teamRepository.existsById(id)) {
+            throw new ResourceAccessException("Team with id " + id + " not found");
+        }
+        Optional<Team> temp = teamRepository.findById(id);
+
+        Team original = temp.get();
+        original.setName(team.getName());
+        original.setTournament(tournament);
+        teamRepository.save(original);
 	}
 }

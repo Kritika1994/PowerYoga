@@ -51,8 +51,8 @@ public class TeamController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT , value="/team/{tournamentId}/{id}")
-	public void updateTeam(@RequestBody Team user,@PathVariable int tournamentId, @PathVariable int id) {
-		teamService.updateTeam(id, user);	
+	public void updateTeam(@RequestBody Team team,@PathVariable int tournamentId, @PathVariable int id) {
+		teamService.updateTeam(tournamentId,id, team);	
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE , value="/team/{id}")

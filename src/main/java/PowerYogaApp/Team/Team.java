@@ -37,9 +37,8 @@ public class Team {
 	 */
 	static int MAX_CAPACITY=15;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
     @JoinColumn(name = "tournament_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Tournament tournament;
 	
 	public Tournament getTournament() {

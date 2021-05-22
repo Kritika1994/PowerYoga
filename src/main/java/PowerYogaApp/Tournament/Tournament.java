@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import PowerYogaApp.Participant.Participant;
 import PowerYogaApp.Round.Round;
 import PowerYogaApp.Team.Team;
@@ -28,12 +31,13 @@ public class Tournament {
 	@Column(name="tournament_name")
 	private String name;
 	
-	@OneToMany(mappedBy = "tournament", fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "tournament")
 	List<Team> teams;
 	
 	/*
 	 * @OneToMany
-	 * 
+	 * @OnDelete(action = OnDeleteAction.CASCADE)
 	 * @JoinColumn(name="tournament_id") List<Round> rounds;
 	 */
 	public Tournament() {
