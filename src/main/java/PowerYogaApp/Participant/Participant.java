@@ -1,34 +1,62 @@
 package PowerYogaApp.Participant;
 
-import PowerYogaApp.Round.Score.Status;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import PowerYogaApp.Round.Score.Status;
+import PowerYogaApp.Team.Team;
+import PowerYogaApp.Tournament.Tournament;
+
+enum Gender { MALE, FEMALE }
+@Entity
 public class Participant {
 
-	
-	String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "participant_id")
+	int id;
 	String name;
 	String district;
 	String email;
 	String phoneNumber;
-	public enum Gender { Male,Female } 
-	Gender gender;
-	static int currID=0;
-	
-	public Participant(String name,  String email, String phoneNumber,String district, String gender) {
-		super();
-		++currID;
-		id="Participant"+currID;
-		this.name = name;
-		this.district = district;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.gender= gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("Male")? Gender.Male:Gender.Female;
-	}
-
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+	@ManyToOne
+	@JoinColumn(name = "team_id", nullable = false)
+	private Team team;
 	
 	public Participant() {
-		++currID;
-		id="Participant"+currID;
+	}
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 	
 	public String getDistrict() {
@@ -45,11 +73,6 @@ public class Participant {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
 	}
 	public String getName() {
 		return name;

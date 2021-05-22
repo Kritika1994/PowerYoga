@@ -1,7 +1,6 @@
 package PowerYogaApp.Participant;
-
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,29 +14,33 @@ public class ParticipantController {
 	@Autowired
 	private ParticipantService participantService;
 	
-	@RequestMapping("/participant")
-	public List<Participant> getAllUsers() {
-		return participantService.getAllUsers();
-		
+	@RequestMapping("/participants")
+	public List<Participant> getAllParticipants() {
+		return participantService.getAllParticipants();
+	}
+	
+	@RequestMapping("/participants/{id}")
+	public List<Participant> getParticipantByTeam(@PathVariable int teamId) {
+		return participantService.getParticipantByTeam(teamId);
 	}
 	
 	@RequestMapping("/participant/{id}")
-	public Participant getUser(@PathVariable String id) {
-		return participantService.getUser(id);
+	public Optional<Participant> getParticipantById(@PathVariable int id) {
+		return participantService.getParticipantById(id);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST , value="/participant")
-	public void addParticipant(@RequestBody Participant user) {
-		 participantService.addParticipant(user);	
+	@RequestMapping(method=RequestMethod.POST , value="/participant/{teamId}")
+	public void addParticipant(@RequestBody Participant user, @PathVariable int teamId) {
+		 participantService.addParticipant(user,teamId);	
 	}
 	
-	@RequestMapping(method=RequestMethod.POST , value="/participant/{id}")
-	public void updateParticipant(@RequestBody Participant user, @PathVariable String id) {
-		 participantService.updateParticipant(user, id);	
+	@RequestMapping(method=RequestMethod.PUT , value="/participant/{teamId}/{id}")
+	public void updateParticipant(@RequestBody Participant user,@PathVariable int teamId, @PathVariable int id) {
+		 participantService.updateParticipant(user,teamId, id);	
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE , value="/participant/{id}")
-	public void deleteParticipant(@PathVariable String id) {
+	public void deleteParticipant(@PathVariable int id) {
 		 participantService.deleteParticipant(id);	
 	}
 }
