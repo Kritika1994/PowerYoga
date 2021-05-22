@@ -1,13 +1,25 @@
 package PowerYogaApp.Tournament;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class Tournament {
-
-	public String getId() {
+	@NotNull
+	@Id
+	@GeneratedValue
+	private Integer id;
+	private String name;
+	
+	public Tournament() {
+		super();
+	}
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -15,19 +27,4 @@ public class Tournament {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@NotNull
-	private String id;
-	private String name;
-	
-	public Tournament() {
-		++currID;
-		id="Tournament"+currID;
-	}
-	public Tournament(String name) {
-		super();
-		++currID;
-		id="Invig"+currID;
-		this.name = name;
-	}
-	static int currID=0;
 }

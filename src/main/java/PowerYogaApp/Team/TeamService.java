@@ -3,6 +3,7 @@ package PowerYogaApp.Team;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ public class TeamService {
 	private List<Team> teamsList = new ArrayList<>(Arrays.asList(new Team("teamid1", "Team-A",null),
 				new Team("teamid2", "Team-B", null)));
 	
-	public void addParticipant(String tournamentId,String teamId, String userId) throws Exception {
-		Tournament tournaments = tournamentService.getTournament(tournamentId);
+	public void addParticipant(int tournamentId,String teamId, String userId) throws Exception {
+		Optional<Tournament> tournaments = tournamentService.getTournament(tournamentId);
 		for(int i=0;i<teamsList.size();i++) {
 			if(teamsList.get(i).getId().equalsIgnoreCase(teamId))
 			{

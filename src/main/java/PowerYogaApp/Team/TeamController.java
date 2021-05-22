@@ -18,7 +18,7 @@ public class TeamController {
 	private TeamService teamService;
 	
 	@RequestMapping(method=RequestMethod.POST , value="/team/{id}")
-	public void addParticipant(@RequestBody String teamId,@PathVariable String tournamentId, @PathVariable String participantId) throws Exception {
+	public void addParticipant(@RequestBody String teamId,@PathVariable int tournamentId, @PathVariable String participantId) throws Exception {
 		 teamService.addParticipant(tournamentId, teamId, participantId);	
 	}
 	

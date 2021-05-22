@@ -6,7 +6,7 @@ import java.util.List;
 import PowerYogaApp.Participant.Participant;
 
 public class Team {
-
+	
 	String id;
 	String name;
 	List<Participant> participants;
