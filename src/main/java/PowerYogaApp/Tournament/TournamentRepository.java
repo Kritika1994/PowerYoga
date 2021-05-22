@@ -1,11 +1,10 @@
 package PowerYogaApp.Tournament;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 
-public interface TournamentRepository extends JpaRepository<Tournament,Integer> {
+public interface TournamentRepository extends CrudRepository<Tournament,Integer> {
 
-	//Tournament findById(int tournamentId);
 }

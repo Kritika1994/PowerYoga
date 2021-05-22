@@ -3,8 +3,11 @@ package PowerYogaApp.Round;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import PowerYogaApp.Team.Team;
 
+//@Entity
 public class Round {
 
 	String id;

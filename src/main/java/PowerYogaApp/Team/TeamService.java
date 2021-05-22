@@ -6,65 +6,74 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import PowerYogaApp.Participant.Participant;
 import PowerYogaApp.Participant.ParticipantService;
 import PowerYogaApp.Tournament.Tournament;
+import PowerYogaApp.Tournament.TournamentRepository;
 import PowerYogaApp.Tournament.TournamentService;
 
 @Service
 public class TeamService {
 
 	@Autowired
-	private ParticipantService participantService;
+	private TeamRepository teamRepository;
 	
 	@Autowired
-	private TournamentService tournamentService;
+	private TournamentRepository tournamentDao;
+	/*
+	 * public void addParticipant(int tournamentId,String teamId, String userId)
+	 * throws Exception { Optional<Tournament> tournaments =
+	 * tournamentService.getTournament(tournamentId); for(int
+	 * i=0;i<teamsList.size();i++) {
+	 * if(teamsList.get(i).getId().equalsIgnoreCase(teamId)) { List<Participant>
+	 * participants = teamsList.get(i).getParticipants();
+	 * if(participants.size()<=Team.MAX_CAPACITY)
+	 * participants.add(participantService.getUser(userId)); else throw new
+	 * Exception("Can't add more than 15 participants"); return; } } }
+	 */
 	
-	private List<Team> teamsList = new ArrayList<>(Arrays.asList(new Team("teamid1", "Team-A",null),
-				new Team("teamid2", "Team-B", null)));
-	
-	public void addParticipant(int tournamentId,String teamId, String userId) throws Exception {
-		Optional<Tournament> tournaments = tournamentService.getTournament(tournamentId);
-		for(int i=0;i<teamsList.size();i++) {
-			if(teamsList.get(i).getId().equalsIgnoreCase(teamId))
-			{
-				List<Participant> participants = teamsList.get(i).getParticipants();
-				if(participants.size()<=Team.MAX_CAPACITY)
-					participants.add(participantService.getUser(userId));
-				else
-					throw new Exception("Can't add more than 15 participants");
-				return;
-			}
-		}
+	public void addTeam(Team team, int tournamentId) {
+		
+		Optional<Tournament> byId = tournamentDao.findById(tournamentId);
+        if (!byId.isPresent()) {
+        	throw new ResponseStatusException(
+        			  HttpStatus.NOT_FOUND, "Tournament not found"
+        			);
+        }
+        Tournament tournament = byId.get();
+      //tie Author to Book
+        team.setTournament(tournament);
+        teamRepository.save(team);
+        //author1.setBooks(books);
 	}
 	
-	public void addTeam(Team team) {		
-		teamsList.add(team);
+	public void deleteTeam(int teamId) {	
+		teamRepository.deleteById(teamId);
 	}
 	
-	public void deleteTeam(String teamId) {		
-		for(int i=0;i<teamsList.size();i++) {
-			if(teamsList.get(i).getId().equalsIgnoreCase(teamId))
-				teamsList.remove(i);
-		}
-	}
-	
-	public void updateTeam(String teamId, Team team) {		
-		for(int i=0;i<teamsList.size();i++) {
-			if(teamsList.get(i).getId().equalsIgnoreCase(teamId))
-				teamsList.set(i, team);
-		}
+	public void updateTeam(int tournamentId, Team team) {		
+		teamRepository.save(team);
 	}
 
 	public List<Team> getAllTeams() {
+		List<Team> teamsList = new ArrayList<Team>();
+		teamRepository.findAll().forEach(teamsList::add);
 		return teamsList;
 	}
-
-	public Team getTeam(String id) {
-		return teamsList.stream().filter(t -> t.getId().equals(id)).findFirst().get();	
+	
+	public List<Team> getAllTeams(int tournamentId) {
+		return teamRepository.findByTournamentId(tournamentId);
 	}
 
+	public Optional<Team> getTeamById(int id) {
+		return teamRepository.findById(id);
+	}
 
+	public List<Team> getTeamByTournament(int tournamentId) {
+		return teamRepository.findByTournamentId(tournamentId);
+	}
 }

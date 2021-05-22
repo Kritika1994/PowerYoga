@@ -15,30 +15,6 @@ import PowerYogaApp.Tournament.TournamentService;
 
 @RestController
 public class TournamentController {
-	/*
-	 * @Autowired private TournamentService TournamentService;
-	 * 
-	 * @RequestMapping("/tournaments") public List<Tournament> getAllTournaments() {
-	 * return TournamentService.getAllTournaments();
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping("/tournament/{id}") public Tournament
-	 * getTournament(@PathVariable String id) { return
-	 * TournamentService.getTournament(id); }
-	 * 
-	 * @RequestMapping(method = RequestMethod.POST, value = "/tournament") public
-	 * void addTournament(@RequestBody Tournament user) {
-	 * TournamentService.addTournament(user); }
-	 * 
-	 * @RequestMapping(method = RequestMethod.PUT, value = "/tournament/{id}")
-	 * public void updateTournament(@RequestBody Tournament user, @PathVariable
-	 * String id) { TournamentService.updateTournament(id, user); }
-	 * 
-	 * @RequestMapping(method = RequestMethod.DELETE, value = "/tournament/{id}")
-	 * public void deleteTournament(@PathVariable String id) {
-	 * TournamentService.deleteTournament(id); }
-	 */
 	
 	@Autowired
 	private TournamentService tournamentService;

@@ -7,42 +7,25 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import PowerYogaApp.Tournament.Tournament;
 
 @Service
 public class TournamentService {
 	
-	/*
-	 * private List<Tournament> tournamentsList = new ArrayList<>(Arrays.asList(new
-	 * Tournament("Tournament-A"), new Tournament("Tournament-B")));
-	 * 
-	 * 
-	 * public void updateTournament(String tournamentId, Tournament tournament) {
-	 * for(int i=0;i<tournamentsList.size();i++) {
-	 * if(tournamentsList.get(i).getId().equalsIgnoreCase(tournamentId))
-	 * tournamentsList.set(i, tournament); } }
-	 * 
-	 * public List<Tournament> getAllTournaments() { return tournamentsList; }
-	 * 
-	 * public Tournament getTournament(String id) { return
-	 * tournamentsList.stream().filter(t -> t.getId().equals(id)).findFirst().get();
-	 * }
-	 * 
-	 * public void deleteTournament(String id) { for(int
-	 * i=0;i<tournamentsList.size();i++) {
-	 * if(tournamentsList.get(i).getId().equalsIgnoreCase(id))
-	 * tournamentsList.remove(i); } } public void addTournament(Tournament
-	 * tournament) { tournamentsList.add(tournament);
-	 * 
-	 * }
-	 */
-	
 	@Autowired
 	TournamentRepository tournamentRepo;
 	
 	public void updateTournament(int tournamentId, Tournament tournament) {
-		tournamentRepo.save(tournament);
+		if (!tournamentRepo.existsById(tournamentId)) {
+            throw new ResourceAccessException("Tournament with id " + tournamentId + " not found");
+        }
+        Optional<Tournament> author = tournamentRepo.findById(tournamentId);
+
+        Tournament tour = author.get();
+        tour.setName(tournament.getName());
+        tournamentRepo.save(tour);
 	}
 
 	public List<Tournament> getAllTournaments() {
